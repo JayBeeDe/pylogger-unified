@@ -8,14 +8,27 @@ Install testing envrionment here: <https://packaging.python.org/en/latest/tutori
 
 ```bash
 cd pylogger-unified/
+rm ./dist/* -fr
 python3 -m build
 python3 -m twine upload --repository testpypi ./dist/*
 ```
 
-## Install the lib (testing env for the moment)
+You can test in a dev environment the packaging:
 
 ```bash
 pip3 install -i https://test.pypi.org/simple/ pylogger_unified
+```
+
+When everything is ok on testpypi repo, you can publish it to prod:
+
+```bash
+python3 -m twine upload ./dist/*
+```
+
+## Install the lib
+
+```bash
+pip3 install pylogger-unified
 ```
 
 ## Start Using the lib
