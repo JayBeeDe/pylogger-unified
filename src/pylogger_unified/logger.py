@@ -217,14 +217,14 @@ class CustomFlaskFilter(logging.Filter):  # pylint: disable=too-few-public-metho
 # functions
 
 
-def pretty(self, msg, no_debug=False, *args, **kwargs):
+def pretty(self, msg, no_debug=False):
     level = 10
     if no_debug:
         level = 20
     try:
-        msg.__dict__
+        msg.__dict__  # pylint: disable=pointless-statement
         msg = complex_obj_to_dict(msg)
-    except:
+    except:  # pylint: disable=bare-except
         pass
     msg = json.dumps(
         msg,
@@ -242,11 +242,11 @@ def complex_obj_to_dict(obj):
         return None
     try:
         obj = dict(obj)
-    except:
+    except:  # pylint: disable=bare-except
         pass
     try:
         obj = obj.__dict__
-    except:
+    except:  # pylint: disable=bare-except
         pass
     data = {}
     for attr, value in obj.items():
@@ -255,19 +255,19 @@ def complex_obj_to_dict(obj):
             ast.literal_eval(str(value))
             if ast.literal_eval(str(value)) is None:
                 is_none = True
-        except:
+        except:  # pylint: disable=bare-except
             pass
         is_int = False
         try:
             int(value)
             is_int = True
-        except:
+        except:  # pylint: disable=bare-except
             pass
         is_float = False
         try:
             float(value)
             is_float = True
-        except:
+        except:  # pylint: disable=bare-except
             pass
         if is_none:
             data[attr] = None
@@ -292,7 +292,7 @@ def hide_lib_loggers(included_loggers=None, excluded_loggers=None, debug=False):
     if debug:
         return
     if included_loggers is None:
-        included_loggers = logging.root.manager.loggerDict
+        included_loggers = logging.root.manager.loggerDict  # pylint: disable=no-member
     if excluded_loggers is None:
         excluded_loggers = []
     for logger_name in included_loggers:
@@ -346,7 +346,7 @@ def init_logger(json_formatter=True, flask_logging=False, enable_gi=None, format
     if log_path is not None and not json_formatter:
         file_handler = logging.FileHandler(log_path)
         file_handler.setLevel(default_level)
-        category = logger_name
+        category = logger_name  # pylint: disable=unused-variable
         file_handler.setFormatter(logging.Formatter("%(asctime)s - %(category)s - %(levelname)s - %(message)s"))
 
         if not logger_has_handler:

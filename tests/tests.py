@@ -3,12 +3,12 @@
 
 import unittest
 import sys
-import traceback
+import traceback  # pylint: disable=unused-import
 import os
 
 abs_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(abs_dir + "/../src/")
-from pylogger_unified import logger as pylogger_unified
+from pylogger_unified import logger as pylogger_unified  # pylint: disable=wrong-import-position
 try:
     from StringIO import StringIO  # noqa
 except ImportError:
@@ -27,30 +27,30 @@ extra = {
 
 
 class TestLogger(unittest.TestCase):
-    # def testColorFormat(self):
-    #     fct_name = sys._getframe().f_code.co_name
-    #     logger = pylogger_unified.init_logger(
-    #         json_formatter=False,
-    #         format_color=True,
-    #         log_path=abs_dir + "/logs/" + fct_name + ".log",
-    #         logger_name=fct_name
-    #     )
-    #     logger.info("This is the " + fct_name)
-    #     logger.warning("This is the " + fct_name + " with extras", extra=extra)
-    #     logger.error("This is the " + fct_name)
+    def testColorFormat(self):
+        fct_name = sys._getframe().f_code.co_name  # pylint: disable=protected-access
+        logger = pylogger_unified.init_logger(
+            json_formatter=False,
+            format_color=True,
+            log_path=abs_dir + "/logs/" + fct_name + ".log",
+            logger_name=fct_name
+        )
+        logger.info("This is the " + fct_name)
+        logger.warning("This is the " + fct_name + " with extras", extra=extra)
+        logger.error("This is the " + fct_name)
 
-    # def testJsonFormat(self):
-    #     fct_name = sys._getframe().f_code.co_name
-    #     logger = pylogger_unified.init_logger(
-    #         log_path=abs_dir + "/logs/" + fct_name + ".log",
-    #         logger_name=fct_name
-    #     )
-    #     logger.info("This is the " + fct_name + " with extras", extra=extra)
-    #     logger.warning("This is the " + fct_name)
-    #     logger.error("This is the " + fct_name)
+    def testJsonFormat(self):
+        fct_name = sys._getframe().f_code.co_name  # pylint: disable=protected-access
+        logger = pylogger_unified.init_logger(
+            log_path=abs_dir + "/logs/" + fct_name + ".log",
+            logger_name=fct_name
+        )
+        logger.info("This is the " + fct_name + " with extras", extra=extra)
+        logger.warning("This is the " + fct_name)
+        logger.error("This is the " + fct_name)
 
     def testExtraFormat(self):
-        fct_name = sys._getframe().f_code.co_name
+        fct_name = sys._getframe().f_code.co_name  # pylint: disable=protected-access
         sys.stdout = buffer = StringIO()
         logger = pylogger_unified.init_logger(
             log_path=abs_dir + "/logs/" + fct_name + ".log",
